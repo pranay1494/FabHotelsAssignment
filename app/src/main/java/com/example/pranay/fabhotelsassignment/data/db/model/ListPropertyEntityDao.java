@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "properties".
 */
-public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, Long> {
+public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, String> {
 
     public static final String TABLENAME = "properties";
 
@@ -22,13 +22,12 @@ public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, Long>
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Landmark = new Property(1, String.class, "landmark", false, "landmark");
-        public final static Property City = new Property(2, String.class, "city", false, "city");
-        public final static Property Name = new Property(3, String.class, "name", false, "name");
-        public final static Property ReviewCount = new Property(4, Integer.class, "reviewCount", false, "reviewCount");
-        public final static Property Price = new Property(5, Integer.class, "price", false, "price");
-        public final static Property RatedText = new Property(6, String.class, "ratedText", false, "ratedText");
+        public final static Property Landmark = new Property(0, String.class, "landmark", false, "landmark");
+        public final static Property City = new Property(1, String.class, "city", false, "city");
+        public final static Property Name = new Property(2, String.class, "name", true, "name");
+        public final static Property ReviewCount = new Property(3, Integer.class, "reviewCount", false, "reviewCount");
+        public final static Property Price = new Property(4, Integer.class, "price", false, "price");
+        public final static Property RatedText = new Property(5, String.class, "ratedText", false, "ratedText");
     }
 
 
@@ -44,13 +43,12 @@ public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, Long>
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"properties\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"landmark\" TEXT," + // 1: landmark
-                "\"city\" TEXT," + // 2: city
-                "\"name\" TEXT," + // 3: name
-                "\"reviewCount\" INTEGER," + // 4: reviewCount
-                "\"price\" INTEGER," + // 5: price
-                "\"ratedText\" TEXT);"); // 6: ratedText
+                "\"landmark\" TEXT," + // 0: landmark
+                "\"city\" TEXT," + // 1: city
+                "\"name\" TEXT PRIMARY KEY NOT NULL ," + // 2: name
+                "\"reviewCount\" INTEGER," + // 3: reviewCount
+                "\"price\" INTEGER," + // 4: price
+                "\"ratedText\" TEXT);"); // 5: ratedText
     }
 
     /** Drops the underlying database table. */
@@ -63,39 +61,34 @@ public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, Long>
     protected final void bindValues(DatabaseStatement stmt, ListPropertyEntity entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
         String landmark = entity.getLandmark();
         if (landmark != null) {
-            stmt.bindString(2, landmark);
+            stmt.bindString(1, landmark);
         }
  
         String city = entity.getCity();
         if (city != null) {
-            stmt.bindString(3, city);
+            stmt.bindString(2, city);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(3, name);
         }
  
         Integer reviewCount = entity.getReviewCount();
         if (reviewCount != null) {
-            stmt.bindLong(5, reviewCount);
+            stmt.bindLong(4, reviewCount);
         }
  
         Integer price = entity.getPrice();
         if (price != null) {
-            stmt.bindLong(6, price);
+            stmt.bindLong(5, price);
         }
  
         String ratedText = entity.getRatedText();
         if (ratedText != null) {
-            stmt.bindString(7, ratedText);
+            stmt.bindString(6, ratedText);
         }
     }
 
@@ -103,82 +96,74 @@ public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, Long>
     protected final void bindValues(SQLiteStatement stmt, ListPropertyEntity entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
         String landmark = entity.getLandmark();
         if (landmark != null) {
-            stmt.bindString(2, landmark);
+            stmt.bindString(1, landmark);
         }
  
         String city = entity.getCity();
         if (city != null) {
-            stmt.bindString(3, city);
+            stmt.bindString(2, city);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(3, name);
         }
  
         Integer reviewCount = entity.getReviewCount();
         if (reviewCount != null) {
-            stmt.bindLong(5, reviewCount);
+            stmt.bindLong(4, reviewCount);
         }
  
         Integer price = entity.getPrice();
         if (price != null) {
-            stmt.bindLong(6, price);
+            stmt.bindLong(5, price);
         }
  
         String ratedText = entity.getRatedText();
         if (ratedText != null) {
-            stmt.bindString(7, ratedText);
+            stmt.bindString(6, ratedText);
         }
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2);
     }    
 
     @Override
     public ListPropertyEntity readEntity(Cursor cursor, int offset) {
         ListPropertyEntity entity = new ListPropertyEntity( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // landmark
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // city
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // reviewCount
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // price
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // ratedText
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // landmark
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // city
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
+            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // reviewCount
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // price
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // ratedText
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, ListPropertyEntity entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setLandmark(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setCity(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setReviewCount(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
-        entity.setPrice(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
-        entity.setRatedText(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setLandmark(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setCity(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setReviewCount(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setPrice(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setRatedText(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(ListPropertyEntity entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final String updateKeyAfterInsert(ListPropertyEntity entity, long rowId) {
+        return entity.getName();
     }
     
     @Override
-    public Long getKey(ListPropertyEntity entity) {
+    public String getKey(ListPropertyEntity entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getName();
         } else {
             return null;
         }
@@ -186,7 +171,7 @@ public class ListPropertyEntityDao extends AbstractDao<ListPropertyEntity, Long>
 
     @Override
     public boolean hasKey(ListPropertyEntity entity) {
-        return entity.getId() != null;
+        return entity.getName() != null;
     }
 
     @Override

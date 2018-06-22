@@ -15,8 +15,6 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(nameInDb = "properties")
 public class ListPropertyEntity {
 
-    @Id(autoincrement = true)
-    private Long id;
     @SerializedName("landmark")
     @Expose
     @Property(nameInDb = "landmark")
@@ -27,6 +25,7 @@ public class ListPropertyEntity {
     private String city;
     @SerializedName("name")
     @Expose
+    @Id
     @Property(nameInDb = "name")
     private String name;
     @SerializedName("reviewCount")
@@ -41,10 +40,10 @@ public class ListPropertyEntity {
     @Expose
     @Property(nameInDb = "ratedText")
     private String ratedText;
-    @Generated(hash = 1907791355)
-    public ListPropertyEntity(Long id, String landmark, String city, String name,
+
+    @Generated(hash = 765023897)
+    public ListPropertyEntity(String landmark, String city, String name,
             Integer reviewCount, Integer price, String ratedText) {
-        this.id = id;
         this.landmark = landmark;
         this.city = city;
         this.name = name;
@@ -55,9 +54,7 @@ public class ListPropertyEntity {
     @Generated(hash = 327958253)
     public ListPropertyEntity() {
     }
-    public Long getId() {
-        return this.id;
-    }
+    
     public String getLandmark() {
         return this.landmark;
     }
@@ -93,8 +90,5 @@ public class ListPropertyEntity {
     }
     public void setRatedText(String ratedText) {
         this.ratedText = ratedText;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
 }
