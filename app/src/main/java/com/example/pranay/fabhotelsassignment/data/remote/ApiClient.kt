@@ -1,5 +1,6 @@
 package com.example.pranay.fabhotelsassignment.data.remote
 
+import com.example.pranay.fabhotelsassignment.BuildConfig
 import com.example.pranay.fabhotelsassignment.data.remote.model.FabModel
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
@@ -29,7 +30,7 @@ class ApiClient (){
         builder.addInterceptor(httpLogger)
 
         mRetrofit = Retrofit.Builder()
-                    .baseUrl("https://api.myjson.com/bins/bs67u/")
+                    .baseUrl(BuildConfig.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(builder.build())

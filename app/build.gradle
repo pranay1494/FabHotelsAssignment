@@ -20,7 +20,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    flavorDimensions "mode"
+    productFlavors{
+        uat{
+            it.buildConfigField 'String', 'BASE_URL', "\"https://api.myjson.com/bins/bs67u/\""
+            dimension "mode"
+        }
+        prod{
+            it.buildConfigField 'String', 'BASE_URL', "\"https://api.myjson.com/bins/bs67u/\""
+            dimension "mode"
+        }
+    }
 
     greendao {
         targetGenDir 'src/main/java'
