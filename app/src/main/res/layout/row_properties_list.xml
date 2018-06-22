@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp">
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tvPrice"
+        android:text="Name: - NA"
+        android:layout_marginRight="@dimen/_5sdp"/>
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="price - NA"/>
+    <TextView
+        android:id="@+id/tvCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_toLeftOf="@+id/tvPrice"
+        android:text="City - NA"/>
+    <TextView
+        android:id="@+id/tvLandmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCity"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tvPrice"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Landmark - NA"/>
+    <TextView
+        android:id="@+id/tvReviewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLandmark"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tvPrice"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Review Count: - NA"/>
+
+</RelativeLayout>
