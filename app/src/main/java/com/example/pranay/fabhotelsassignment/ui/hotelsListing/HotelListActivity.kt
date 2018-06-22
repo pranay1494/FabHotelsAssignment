@@ -2,6 +2,7 @@ package com.example.pranay.fabhotelsassignment.ui.hotelsListing
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.example.pranay.fabhotelsassignment.R
 import com.example.pranay.fabhotelsassignment.data.db.model.ListPropertyEntity
 import com.example.pranay.fabhotelsassignment.ui.base.BaseActivity
@@ -36,6 +37,7 @@ class HotelListActivity : BaseActivity(),HotelsMvpView {
     }
 
     override fun setRecyclerView() {
+        tvError.visibility = View.GONE
         rvHotelList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         adapter = RecyclerViewAdapter(this, listOf())
         rvHotelList.adapter = adapter
@@ -46,5 +48,8 @@ class HotelListActivity : BaseActivity(),HotelsMvpView {
         if(mPresenter!=null){
             mPresenter.onDetach()
         }
+    }
+    override fun showNoDataErrorMsg() {
+        tvError.visibility = View.VISIBLE
     }
 }

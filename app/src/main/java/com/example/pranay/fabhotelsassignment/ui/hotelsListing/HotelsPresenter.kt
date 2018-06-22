@@ -51,6 +51,7 @@ class HotelsPresenter @Inject constructor(dataManager: DataManager, compositeDis
                     getMvpView().updateRecylerView(it)
                 },{
                     getMvpView().showToast("error fetching data from db..")
+                    getMvpView().showNoDataErrorMsg()
                 })
     }
 }

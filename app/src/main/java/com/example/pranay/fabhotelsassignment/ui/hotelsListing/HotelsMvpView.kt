@@ -9,4 +9,5 @@ import com.example.pranay.fabhotelsassignment.ui.base.MvpView
 interface HotelsMvpView : MvpView {
     fun updateRecylerView(hotelsList:List<ListPropertyEntity>)
     fun setRecyclerView()
+    fun showNoDataErrorMsg()
 }
